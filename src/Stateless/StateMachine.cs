@@ -40,6 +40,22 @@ namespace Stateless
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="initialState"></param>
+        /// <param name="stateMutator"></param>
+        public StateMachine(TState initialState, Action<TState> stateMutator)
+        {
+            var reference = new StateReference { State = initialState };
+            _stateAccessor = () => reference.State;
+            _stateMutator = s =>
+            {
+                reference.State = s;
+                stateMutator(s);
+            };
+        }
+
+        /// <summary>
         /// The current state.
         /// </summary>
         public TState State
