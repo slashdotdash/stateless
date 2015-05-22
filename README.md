@@ -58,7 +58,7 @@ In the example below, the OnHold state is a substate of the Connected state. Thi
 	    .Permit(Trigger.HungUp, State.OffHook)
 	    .Permit(Trigger.PhoneHurledAgainstWall, State.PhoneDestroyed);
 
-In addition to the StateMachine.State property, which will report the precise current state, an IsInState(State) method is provided. IsInState(State) will take substates into account, so that if the example above was in the OnHold state, IsInState(State.Connected) would also evaluate to true.
+In addition to the StateMachine.State property, which will report the precise current state, an `IsInState(State)` method is provided. `IsInState(State)` will take substates into account, so that if the example above was in the OnHold state, `IsInState(State.Connected)` would also evaluate to `true`.
 
 ##Entry/Exit Events
 
@@ -80,7 +80,7 @@ In this example the state machine will use the myState object for state storage.
 
 ##Introspection
 
-The state machine can provide a list of the triggers than can be successfully fired within the current state via the StateMachine.PermittedTriggers property.
+The state machine can provide a list of the triggers than can be successfully fired within the current state via the `StateMachine.PermittedTriggers` property.
 
 ##Guard Clauses
 
@@ -109,7 +109,7 @@ Trigger parameters can be used to dynamically select the destination state using
 
 Firing a trigger that does not have an allowed transition associated with it will cause an exception to be thrown.
 
-To ignore triggers within certain states, use the Ignore(TTrigger) directive:
+To ignore triggers within certain states, use the `Ignore(TTrigger)` directive:
 
 	phoneCall.Configure(State.Connected)
 	    .Ignore(Trigger.CallDialled);
