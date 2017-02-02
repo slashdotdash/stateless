@@ -1,4 +1,6 @@
-# Stateless .NET State Machine Framework
+# [DEPRECATED] Stateless .NET State Machine Framework
+
+Go to the official [Stateless](https://github.com/dotnet-state-machine/stateless) repo for updates.
 
 Stateless is a _hierarchical state machine_ framework based on [Simple State Machine](http://codeplex.com/simplestatemachine) for Boo, but configured using C# 3.0.
 
