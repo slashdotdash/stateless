@@ -67,6 +67,31 @@ namespace Stateless.Tests
         }
 
         [Test]
+        public void StateIsWrittenJustOnceOnEveryStateTransition()
+        {
+            var state = State.B;
+            var saveCount = 0;
+            Action<State> stateMutator = s =>
+            {
+                saveCount++;
+                state = s;
+            };
+            var sm = new StateMachine<State, Trigger>(State.B, stateMutator);
+            sm.Configure(State.B).Permit(Trigger.X, State.C);
+            sm.Configure(State.C).Permit(Trigger.Y, State.B);
+            Assert.AreEqual(State.B, sm.State);
+            Assert.AreEqual(State.B, state);
+            sm.Fire(Trigger.X);
+            Assert.AreEqual(State.C, sm.State);
+            Assert.AreEqual(State.C, state);
+            Assert.AreEqual(1, saveCount);
+            sm.Fire(Trigger.Y);
+            Assert.AreEqual(State.B, sm.State);
+            Assert.AreEqual(State.B, state);
+            Assert.AreEqual(2, saveCount);
+        }
+
+        [Test]
         public void SubstateIsIncludedInCurrentState()
         {
             var sm = new StateMachine<State, Trigger>(State.B);

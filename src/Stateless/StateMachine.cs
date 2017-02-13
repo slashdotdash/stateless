@@ -40,6 +40,22 @@ namespace Stateless
         }
 
         /// <summary>
+        /// Construct a state machine with external storage (saving only).
+        /// </summary>
+        /// <param name="initialState">The initial state.</param>
+        /// <param name="stateMutator">An action that will be called to write new state values.</param>
+        public StateMachine(TState initialState, Action<TState> stateMutator)
+        {
+            var reference = new StateReference { State = initialState };
+            _stateAccessor = () => reference.State;
+            _stateMutator = s =>
+            {
+                reference.State = s;
+                stateMutator(s);
+            };
+        }
+
+        /// <summary>
         /// The current state.
         /// </summary>
         public TState State
